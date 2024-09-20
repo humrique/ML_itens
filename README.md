@@ -1,5 +1,5 @@
-# Amazon_books
-Extrair dados de livros da amazon e armazenar no PostgresSQL
+# ML_itens
+Extrair dados do Mercado Livre e armazenar no PostgresSQL
 
 ## Pré-requisitos
 
