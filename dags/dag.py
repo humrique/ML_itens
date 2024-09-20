@@ -87,7 +87,21 @@ def get_ml_data_itens(item, num_itens, ti):
     df.drop_duplicates(subset=["Title","Price"], inplace=True)
 
     ti.xcom_push(key='item_data', value=df.to_dict('records'))
-    
+
+def insert_book_data_into_postgres(ti):
+    item_data = ti.xcom_pull(key='item_data', task_ids='fetch_item_data')
+    if not item_data:
+        raise ValueError("No item data found")
+
+    postgres_hook = PostgresHook(postgres_conn_id='ml_itens_connection')
+    insert_query = """
+    INSERT INTO itens (title, price, rating, store)
+    VALUES (%s, %s, %s, %s)
+    """
+    for item in item_data:
+        postgres_hook.run(insert_query, parameters=(item['Title'], item['Price'], item['Rating'], item['Store']))
+
+
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -124,9 +138,17 @@ create_table_task = PostgresOperator(
     """,
     dag=dag,
 )
+
+insert_item_data_task = PythonOperator(
+    task_id='insert_book_data',
+    python_callable=insert_book_data_into_postgres,
+    dag=dag,
+)
+
+
 end = EmptyOperator(task_id='end')
 
-start >> fetch_item_data_task >> create_table_task >> end
+start >> fetch_item_data_task >> create_table_task >> insert_item_data_task >> end
 
 
 
