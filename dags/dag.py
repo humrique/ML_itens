@@ -87,7 +87,7 @@ def get_ml_data_itens(item, num_itens, ti):
     df.drop_duplicates(subset=["Title","Price"], inplace=True)
 
     ti.xcom_push(key='item_data', value=df.to_dict('records'))
-
+    
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -110,9 +110,23 @@ fetch_item_data_task = PythonOperator(
     dag=dag,
 )
 
+create_table_task = PostgresOperator(
+    task_id='create_table',
+    postgres_conn_id='ml_itens_connection',
+    sql="""
+    CREATE TABLE IF NOT EXISTS itens (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,        
+        price TEXT,
+        rating TEXT,
+        store TEXT
+    );
+    """,
+    dag=dag,
+)
 end = EmptyOperator(task_id='end')
 
-start >> fetch_item_data_task >> end
+start >> fetch_item_data_task >> create_table_task >> end
 
 
 
