@@ -12,11 +12,10 @@ default_args = {
     'retry_delay': timedelta(minutes=5)
 }
 
-with DAG(dag_id='fetch_and_store_amazon_books',
+with DAG(dag_id='fetch_and_store_mercado_livre_itens',
         default_args=default_args,
-        description='DAG que coleta dados de livros da Amazon e armazena no Postgres',
-        schedule_interval=timedelta(days=1)        
-):
+        description='DAG que itens do Mercado Livre e armazena no Postgres',
+        schedule_interval=timedelta(days=1)):
 
     start = EmptyOperator(task_id='start')
 
