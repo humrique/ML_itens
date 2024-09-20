@@ -9,8 +9,8 @@ Certifique-se de ter o Python (versão 3.9) instalado em sua máquina.
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/humrique/Amazon_books.git
-   cd Amazon_books/
+   git clone https://github.com/humrique/ML_itens.git
+   cd ML_itens/
 
 2. Ambiente Virtual:
     ```bash
