@@ -36,6 +36,14 @@ Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 5. Configurando uma conneciton com o Postgress no Airflow
    - No Airflow, crie uma nova conexão com o PostgreSQL. Como os containers estão na mesma rede Docker, o Host pode ser configurado com o nome do serviço Docker (postgres).
    - TODO: Automatizar essa conexão na primeira vez que o Docker subir.
+     ```bash
+     #Connection Id: ml_itens_connection
+     #Connection Type: Postgres
+     #Host: postgres
+     #Database: ml_itens
+     #Login: airflow
+     #Password: airflow
+     
    ![image](https://github.com/user-attachments/assets/51b4ccc8-36c3-428e-aa8d-359b46e554bf)
 6. Execute a DAG
    ![image](https://github.com/user-attachments/assets/d47a0538-1ecb-4d56-b5a2-6bdf940526da)
