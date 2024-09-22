@@ -23,6 +23,8 @@ Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 
 3. Suba os containers Docker:
     ```bash
+    echo -e "AIRFLOW_UID=$(id -u)" > .env
+    docker compose up airflow-init
     docker compose up
 
 4. Acesse o Airflow:
