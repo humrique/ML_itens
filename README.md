@@ -50,20 +50,9 @@ Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 
 
 ## Visualização dos Dados
-   - Acesse PgAdmin -> http://localhost:5050
-        ```bash
-        # Usuário: admin@admin.com
-        # Senha: root
-   - Registre um novo servidor
-
-        ![image](https://github.com/user-attachments/assets/cdb67728-541a-4afd-8b63-4ee31e20a0f2)
-        ![image](https://github.com/user-attachments/assets/cf5d8a3e-4db3-4042-b567-a23f7389d89d)
-        ![image](https://github.com/user-attachments/assets/9fdc3bc7-9db6-4159-8c53-ac9ec1f37312)
-        ```bash
-        # Usuário: airflow
-        # Senha: airflow   
-
-
+   - Acesse PgAdmin -> http://localhost:5050      
+   - Acesse o Query Tool
+        ![image](https://github.com/user-attachments/assets/5ffb56cb-9a44-4da7-b938-d41bcdb1954e)
    - Execute essa consulta SQL para vizualisar os dados
         ```bash
         SELECT * FROM ITENS
