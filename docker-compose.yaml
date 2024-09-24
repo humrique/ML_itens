@@ -85,6 +85,12 @@ x-airflow-common:
     postgres:
       condition: service_healthy
 
+configs:
+  servers_json:
+    file: ./initdb/servers.json
+  pgpass_config:
+    file: ./initdb/pgpass
+
 services:
   postgres:
     image: postgres:13
@@ -94,7 +100,7 @@ services:
       POSTGRES_DB: airflow
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
-      - ./initdb:/docker-entrypoint-initdb.d/ 
+      - ./initdb:/docker-entrypoint-initdb.d/      
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 10s
@@ -105,18 +111,21 @@ services:
       - "5432:5432"
 
   pgadmin:
-
-    container_name: pgadmin4_container2
-    
-    image: dpage/pgadmin4
-    
+    container_name: pgadmin4_container2    
+    image: dpage/pgadmin4    
     restart: always
-    
-    environment:
-    
+    user: root        
+    environment:    
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
-      
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    entrypoint: /bin/sh -c "chmod 600 /pgpass; /entrypoint.sh;"
+    configs:
+      - source: servers_json
+        target: /pgadmin4/servers.json      
+    volumes:
+    - ./initdb/pgpass:/pgpass
     ports:
       - "5050:80"
 
