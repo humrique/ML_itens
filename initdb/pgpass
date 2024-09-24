@@ -1,1 +1,2 @@
 postgres:5432:postgres:airflow:airflow
+postgres:5432:ml_itens:airflow:airflow
